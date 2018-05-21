@@ -32,7 +32,7 @@ import StatefulChildComponent from './components/StatefulChildComponent';
 ```
 
 Notice that you do not have to specify the file type in the import statements (.js can be left off).
-Now lets actually render these components in the empty ``` javascript <div>``` tag underneath the ``` javascript <header>``` tag in App.js.
+Now lets actually render these components in the empty ```<div>``` tag underneath the ```<header>``` tag in App.js.
 
 
  ``` javascript
@@ -84,9 +84,9 @@ this.state = {
 }
 ```
 
-Next, create a function underneath your constructor called "toggleTrueOrFalse" that will use this.setState to make this.state.trueOrFalse equal to the opposite of whatever it currently equals.
+Next, create a function underneath your constructor, but above the render() method, called "toggleTrueOrFalse". This function will use this.setState to make this.state.trueOrFalse equal to the opposite of whatever it currently equals.
 
-GOOD
+#### GOOD
 
 ``` javascript
 toggleTrueOrFalse = () => {
@@ -108,7 +108,7 @@ Notice how if you call your variable the same name as it is called in the state 
 There are multiple ways to handle binding functions to the class, this "arrow function" syntax (the "arrow" being the "=>") is how I prefer to do it for simplicity's sake.
 When googling React stuff you will often see an alternative way of handling this using the "bind" function in the constructor. You can do further research if you want to see why people prefer the various ways of handling this.
 
-BAD 
+#### BAD 
 
 ``` javascript
 toggleTrueOrFalse = () => {
@@ -120,7 +120,7 @@ This is a common anti-pattern. React wants you to use setState and trigger that 
 
 Then, add a button tag above your child components that has an onClick function which triggers your function when clicked.
 
-GOOD 
+#### GOOD 
 
 ``` javascript
 <div className="App">
@@ -155,7 +155,7 @@ or
 Calling the function without adding () at the end, or calling a function that calls the function with () at the end to avoid an infinite loop of re-renders.
 If you want to pass a value/parameter directly to the function, you need to use the second example above.
 
-BAD 
+#### BAD 
 
 ``` javascript
 <div className="App">
@@ -199,13 +199,14 @@ Next let's talk about what we just did to make the data show on the page.
 Fun fact, you haven't technically written a single line of HTML at this point, and you aren't going to.
 You've actually been using a language called JSX (JavaScript XML), which is much more powerful than HTML.
 
-
 - "JSX produces React 'elements'"
 - "React doesn’t require using JSX, but most people find it helpful as a visual aid when working with UI inside the JavaScript code. It also allows React to show more useful error and warning messages."
 - "You can put any valid JavaScript expression inside the curly braces in JSX. For example, 2 + 2, user.firstName, or formatName(user) are all valid JavaScript expressions."
 - "After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects."
 - "By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks."
 Further reading: https://reactjs.org/docs/introducing-jsx.html
+
+
 
 ## Passing data from parent component to child components as "props"
 
