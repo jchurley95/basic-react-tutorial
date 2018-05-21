@@ -2,6 +2,25 @@
 
 Learn how to access and manipulate data between parent and child components in a React app.
 
+## Component "state"
+
+This JSON object exists in the constructor of a React stateful component. 
+Add 
+
+## this.setState({})
+
+## Passing data from parent component to child components as "props"
+
+## Showing data in JSX
+
+## Conditional rendering of child components
+
+## Mapping through an array to return child components
+
+## Passing functions as props/Updating parent state from child component
+
+
+
 Below this line is the README that comes with create-react-app
 ____________________________________________________________________________________________________________
 

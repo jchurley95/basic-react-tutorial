@@ -5,6 +5,13 @@ import FunctionalChildComponent from './components/FunctionalChildComponent';
 import StatefulChildComponent from './components/StatefulChildComponent';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+
+    }
+  }
   render() {
     return (
       <div className="App">
