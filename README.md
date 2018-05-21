@@ -518,6 +518,7 @@ this.state = {
 ```
 
 Create a new file in the components folder called PizzaTopping.js and make sure to pass props as a parameter, and display props.topping.
+If you are using VS Code as your editor, I would recommend trying out an extension called "React Code Snippets" which allows you to type rsc and then press tab to scaffold a functional component for you. It also allows you to type rcc then press tab and it will scaffold out a stateful component for you.
 
 ``` javascript
 import React from 'react';
