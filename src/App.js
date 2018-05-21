@@ -7,7 +7,7 @@ class App extends Component {
     super();
 
     this.state = {
-      
+
     }
   }
 
@@ -19,7 +19,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div>
-          
+         
         </div>
       </div>
     );

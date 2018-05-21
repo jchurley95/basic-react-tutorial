@@ -4,7 +4,7 @@ Learn how to access and manipulate data between parent and child components in a
 
 To get started, clone this repo and run "npm install", and then run "npm start".
 Assuming that worked, it should have installed all the dependencies specified in that package.json and started the app on localhost:3000.
-It should have opened the app for your as well in your browser. You will notice that the app reloads everytime you save your code.
+It should have opened the app for your as well in your browser. You will notice that the app reloads everytime you save your code, and you will also notice the awesome spinning React symbol that comes with each app you bootstrap with create-react-app.
 
 I personally use Visual Studio Code as your editor. It is quick to open and has awesome installable React extensions like "React Code Snippets" which can increase your development speed and limit how much syntax and structure you have to memorize. This tutorial will be tailored towards using VS Code.
 
@@ -200,6 +200,8 @@ Fun fact, you technically haven't been writing any HTML at this point, and you a
 You've actually been using a language called JSX (JavaScript XML), which is much more powerful than HTML.
 If you look at the code, your elements all say "className" instead of "class", and you just wrote a javascript directly into the text between tags using the bracket {} syntax.
 
+One key thing to remember is that each JSX object can only have one element, so basically if you only created two divs side by side not enclosed in another div then it will break.
+
 A little more about JSX:
 
 - "JSX produces React 'elements'"
@@ -284,19 +286,343 @@ or
 </div>
 ```
 
-You can render entire elements conditionally with JSX. This is helpful in any number on situations, such as only rendering/enabling certain buttons on a page if the user has the right permissions to use them, or only rendering parts of a page if a user is logged in, or only allowing a user to click submit on a form if certain fields on the form have been filled in.
+or
 
-## Passing data from parent component to child components as "props"
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    {this.state.trueOrFalse && <div>{this.state.myString}</div>}
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+```
+
+You can render entire elements conditionally with JSX. This is helpful in any number on situations, such as only rendering/enabling certain buttons on a page if the user has the right permissions to use them, or only rendering parts of a page if a user is logged in, or only allowing a user to click submit on a form if certain fields on the form have been filled in.
 
 ## Conditional rendering of child components
 
-## Mapping through an array to return child components
+Let's expand on the previous section and only show our FunctionalChildComponent if trueOrFalse is true, and only show our StatefulChildComponent if trueOrFalse is false.
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse && this.state.myString}</div>
+    {this.state.trueOrFalse === true && <FunctionalChildComponent />}
+    {this.state.trueOrFalse === false && <StatefulChildComponent />}
+  </div>
+</div>
+```
+
+or 
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse && this.state.myString}</div>
+    {
+      this.state.trueOrFalse 
+      ? 
+      <FunctionalChildComponent />
+      :
+      <StatefulChildComponent />
+    }
+  </div>
+</div>
+```
+
+## Passing data from parent component to child components as "props"
+
+Our data in this app currently lives in our App.js state, but we can access it from our child components by passing it as a reserved term called "props" through the element tags. Whatever you decide to call these props is up to you (for example, stringFromParent could be called something else like angularWishesItWasReact)
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse && this.state.myString}</div>
+    {
+      this.state.trueOrFalse 
+      ? 
+      <FunctionalChildComponent stringFromParent={this.state.myString} trueOrFalseFromParent={this.state.trueOrFalse} />
+      :
+      <StatefulChildComponent stringFromParent={this.state.myString} trueOrFalseFromParent={this.state.trueOrFalse} />
+    }
+  </div>
+</div>
+```
+
+Now we can access this in our child components.
+Make sure with the functional child component to pass props as a parameter.
+
+Note: we have to refer to props as this.props in the stateful child and just props in the functional child. 
+
+
+``` javascript
+import React from 'react';
+
+const FunctionalChildComponent = (props) => {
+    return (
+        <div>
+            Hello From FunctionalChildComponent, props.stringFromParent is: {props.stringFromParent}, and props.trueOrFalseFromParent is: {props.trueOrFalseFromParent.toString()}
+        </div>
+    );
+};
+
+export default FunctionalChildComponent;
+```
+
+and 
+
+``` javascript
+import React, { Component } from 'react';
+
+class StatefulChildComponent extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            
+        }
+    }
+    render() {
+        return (
+            <div>
+                Hello from StatefulChildComponent, this.props.stringFromParent is: {this.props.stringFromParent}, and this.props.trueOrFalseFromParent is: {this.props.trueOrFalseFromParent.toString()}
+            </div>
+        );
+    }
+}
+
+export default StatefulChildComponent;
+```
+
+We can use this data here, but we cannot directly manipulate it here. This is a good thing, as it helps preserve and control our data by limiting where it can actually be changed. It is one of the early differences between the standard ways to do React and Angular. This is confusing to picture at first because you still can and should manipulate data in your "top level state" from child components using functions that live in that top level components passed down as props to the child components. That felt confusing just typing it, so don't try to read that over and over until it makes sense, just move on to the next section and see it in action. It'll make way more sense if you just do it.
+
+Further reading on "Unidirectional Data Flow In React":
+https://medium.com/@lizdenhup/understanding-unidirectional-data-flow-in-react-3e3524c09d8e
 
 ## Passing functions as props/Updating parent state from child component
 
+Remember our toggleTrueOrFalse function? Its time to pass it down to our child components the same way we passed down the state values (as props).
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse && this.state.myString}</div>
+    {
+      this.state.trueOrFalse 
+      ? 
+      <FunctionalChildComponent 
+        stringFromParent={this.state.myString} 
+        trueOrFalseFromParent={this.state.trueOrFalse}
+        parentToggleFunction={this.toggleTrueOrFalse}
+      />
+      :
+      <StatefulChildComponent 
+        stringFromParent={this.state.myString} 
+        trueOrFalseFromParent={this.state.trueOrFalse}
+        parentToggleFunction={this.toggleTrueOrFalse}
+      />
+    }
+  </div>
+</div>
+```
+
+Notice that I removed our ```<button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>```, it's moving to our child components now and it will call the same function as before, but this time it will refer to it in terms of props.
+
+``` javascript
+import React from 'react';
+
+const FunctionalChildComponent = (props) => {
+    return (
+        <div>
+          <button onClick={props.toggleTrueOrFalse}>Make it true</button>
+          Hello From FunctionalChildComponent, props.stringFromParent is: {props.stringFromParent}, and props.trueOrFalseFromParent is: {props.trueOrFalseFromParent.toString()}
+        </div>
+    );
+};
+
+export default FunctionalChildComponent;
+```
+
+and 
+
+``` javascript
+import React, { Component } from 'react';
+
+class StatefulChildComponent extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            
+        }
+    }
+    render() {
+        return (
+            <div>
+              <button onClick={this.props.toggleTrueOrFalse}>Make it false</button>
+              Hello from StatefulChildComponent, this.props.stringFromParent is: {this.props.stringFromParent}, and this.props.trueOrFalseFromParent is: {this.props.trueOrFalseFromParent.toString()}
+            </div>
+        );
+    }
+}
+
+export default StatefulChildComponent;
+```
+
+Now our button tags live in the child components, and every time we click the button on the screen it will change the value in the parent component's state, trigger a setState re-render, and in the process, load the correct JSX/child component based on the value it now reads from the App.js state.
+
+## Mapping through an array to return child components
+
+Pretend you were creating a checkout cart for an app, and you want to display each item in the cart as its own "card" but with a standard layout and look. Your page (parent component) has an array in its state object of each item the user has in their cart, and you would use JSX to iterate through that array and for each element in the array return a ```<CheckoutCard />``` functional component. It's a pretty powerful pattern, going back to what we talked about with child components being the re-usable building blocks of the app.
+
+Let's try it in our app.
+
+First, we need to create an array in our App.js state object. I'm writing this during lunch and I'm hungry, so we're going to go with pizza toppings, not including pineapple, because that is just wrong.
+
+``` javascript
+this.state = {
+  myString: "Hello from myString",
+  trueOrFalse: false,
+  pizzaToppings: ["pepperoni", "sausage", "buffalo chicken", "jalapenos", "bacon", "extra cheese", "black olives"]
+}
+```
+
+Create a new file in the components folder called PizzaTopping.js and make sure to pass props as a parameter, and display props.topping.
+
+``` javascript
+import React from 'react';
+
+const PizzaTopping = (props) => {
+    return (
+        <div>
+            {props.topping}
+        </div>
+    );
+};
+
+export default PizzaTopping;
+```
+
+Next, add PizzaTopping.js as one of our imports in App.js 
+
+``` javascript
+import PizzaTopping from './components/PizzaTopping';
+```
+
+Finally, render a ```<PizzaTopping />``` component for each element of our this.state.pizzaToppings array.
+Your App.js should look something like this:
+
+``` javascript
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import FunctionalChildComponent from './components/FunctionalChildComponent';
+import StatefulChildComponent from './components/StatefulChildComponent';
+import PizzaTopping from './components/PizzaTopping';
+
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      myString: "Hello from myString",
+      trueOrFalse: false,
+      pizzaToppings: ["pepperoni", "sausage", "buffalo chicken", "jalapenos", "bacon", "extra cheese", "black olives"]
+    }
+  }
+
+  toggleTrueOrFalse = () => {
+    var trueOrFalse = !this.state.trueOrFalse;
+    this.setState({trueOrFalse});
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <div>
+          <div>True or False: {this.state.trueOrFalse.toString()}</div>
+          <div>{this.state.trueOrFalse && this.state.myString}</div>
+          {
+            this.state.trueOrFalse 
+            ? 
+            <FunctionalChildComponent 
+              stringFromParent={this.state.myString} 
+              trueOrFalseFromParent={this.state.trueOrFalse}
+              toggleTrueOrFalse={this.toggleTrueOrFalse}
+            />
+            :
+            <StatefulChildComponent 
+              stringFromParent={this.state.myString} 
+              trueOrFalseFromParent={this.state.trueOrFalse}
+              toggleTrueOrFalse={this.toggleTrueOrFalse}
+            />
+          }
+          {
+            this.state.pizzaToppings.map((currentTopping, index) => {
+              return (<PizzaTopping topping={currentTopping} key={index} />)
+            })
+          }
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+# You're Done!
+Now you can create parent and child components, pass data and functions as props from the parent to the children, and dynamically render components based on state or props.
+
+More advanced tutorials would include integrating an ```express``` server as your API and using npm packages like ```axios``` or ```fetch``` to make API calls from react components, as well as using the React lifecycle methods such as ```componentWillMount()``` and ```componentDidMount()``` to control what data your component initially loads with using those API calls.
+
+You can also clone this repo https://github.homedepot.com/Pricing/react-common-framework-UI and have an app set up with 
+- express and react already bootstrapped for you
+- React Router set up
+- package.json scripts already set up to handle react and express running together
+- Home Depot THDSSO login functionality and page already set up as default page if not logged in (will also work between sites created with this repo unless that functionality is removed or changed by you, as in you can go from one site to the next without logging in again if that THDSSO cookie is already saved in the browser and/or user has a valid session still in the backend)
+- UX Styleguide already integrated
 
 
-Below this line is the README that comes with create-react-app
+
+
+
+
+#Below this line is the README that comes with create-react-app
 ____________________________________________________________________________________________________________
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
