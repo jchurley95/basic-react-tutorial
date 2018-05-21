@@ -1,3 +1,10 @@
+# Basic React Tutorial
+
+Learn how to access and manipulate data between parent and child components in a React app.
+
+Below this line is the README that comes with create-react-app
+____________________________________________________________________________________________________________
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
