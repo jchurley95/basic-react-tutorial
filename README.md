@@ -1,17 +1,185 @@
 # Basic React Tutorial
 
 Learn how to access and manipulate data between parent and child components in a React app.
+To get started, clone this repo and run "npm install", and then run "npm start".
+Assuming that worked, it should have installed all the dependencies specified in that package.json and started the app on localhost:3000.
+It should have opened the app for your as well in your browser. You will notice that the app reloads everytime you save your code.
+
+I personally use Visual Studio Code as your editor. It is quick to open and has awesome installable React extensions like "React Code Snippets" which can increase your development speed and limit how much syntax and structure you have to memorize. This tutorial will be tailored towards using VS Code.
+
+If you have VS Code set up, you can just run "code ." from your terminal with the directory open and get started writing some React.
+Your actual React code exists in the "src" folder and cannot go outside of this folder.
+
+## Parent and Child Components
+
+Our goal is to create re-usable building blocks called child components.
+The structure that these building blocks live inside of is their parent component.
+Within the "src" folder you have been given a folder called "components" which contains FunctionalChildComponent.js and StatefulChildComponent.js. 
+In this app, the file called "App.js" will be these other two components' parent component.
+
+To see this in action, we first need to import our child components into App.js.
+The import statements in App.js should now look something like:
+
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import FunctionalChildComponent from './components/FunctionalChildComponent';
+import StatefulChildComponent from './components/StatefulChildComponent';
+
+Notice that you do not have to specify the file type in the import statements (.js can be left off).
+React components can be declared like HTML tags, but should be closed immediately like an <input /> tag.
+Now lets actually render these components in the empty <div> tag underneath the <header> tag in App.js.
+
+CODE:
+
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+
+If done correctly, you should see "Hello from FunctionalChildComponent" and "Hello from StatefulChildComponent" on the page.
 
 ## Component "state"
 
 This JSON object exists in the constructor of a React stateful component. 
-Add 
+Open the "App.js" file in your code editor.
 
-## this.setState({})
+You've been given an empty state object. Add a property to this object called "myString" and make its value "Hello from myString". 
+Next, add a line directly under the "render() {" line that says "console.log(this.state.myString)".
+If done correctly, your browser console should show your string.
 
-## Passing data from parent component to child components as "props"
+CODE:
+
+this.state = {
+  myString: "Hello from myString"
+}
+
+You can create/call on data outside of your state object as well, but it is considered an anti-pattern. This is not just my opinion, you can actually end up seeing an error or warning in the console coming from the React team that calls it an anti-pattern. We'll see why in the next section.
+
+## Using this.setState({}) to trigger a re-render of the page.
+
+When we maintain our data in our state object, we can work with the React framework rather than against it.
+React gives us a method called setState which lets us update our state object and then triggers a re-render of the component AND it's children as a result.
+
+Try it out:
+Add a property to the state object called "trueOrFalse" and make it's value false.
+
+CODE:
+
+this.state = {
+  myString: "Hello from myString",
+  trueOrFalse: false
+}
+
+Next, create a function underneath your constructor called "toggleTrueOrFalse" that will use this.setState to make this.state.trueOrFalse equal to the opposite of whatever it currently equals.
+
+GOOD CODE:
+
+toggleTrueOrFalse = () => {
+    var updatedTrueOrFalse = !this.state.trueOrFalse;
+    this.setState({trueOrFalse: updatedTrueOrFalse});
+}
+
+or
+
+toggleTrueOrFalse = () => {
+    var trueOrFalse = !this.state.trueOrFalse;
+    this.setState({trueOrFalse});
+}
+
+Notice how if you call your variable the same name as it is called in the state object you can just say this.setState({trueOrFalse}). 
+There are multiple ways to handle binding functions to the class, this "arrow function" syntax (the "arrow" being the "=>") is how I prefer to do it for simplicity's sake.
+When googling React stuff you will often see an alternative way of handling this using the "bind" function in the constructor. You can do further research if you want to see why people prefer the various ways of handling this.
+
+BAD CODE: 
+
+toggleTrueOrFalse = () => {
+    this.state.trueOrFalse = !this.state.trueOrFalse;
+}
+
+This is a common anti-pattern. React wants you to use setState and trigger that re-render. Feel free to do further research.
+
+Then, add a button tag above your child components that has an onClick function which triggers your function when clicked.
+
+GOOD CODE: 
+
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+
+or 
+
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={() => {this.toggleTrueOrFalse()}}>Toggle T/F</button>  
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+
+Calling the function without adding () at the end, or calling a function that calls the function with () at the end to avoid an infinite loop of re-renders.
+If you want to pass a value/parameter directly to the function, you need to use the second example above.
+
+BAD CODE: 
+
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse()}>Toggle T/F</button>  
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+
+A big "gotcha" of the React framework is that this syntax will constantly trigger re-rendering of the component in an infinite loop and crash the app. 
+
+Finally, lets show this value on the page as it changes.
+
+CODE:
+
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse}</div>
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+
+Now when you click the button you should see the value change on the page.
+Next let's talk about what we just did to make the data show on the page.
 
 ## Showing data in JSX
+
+Fun fact, you haven't technically written a single line of HTML at this point and you aren't going to.
+Instead, we are using a language called JSX (JavaScript XML).
+
+## Passing data from parent component to child components as "props"
 
 ## Conditional rendering of child components
 

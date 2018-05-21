@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import FunctionalChildComponent from './components/FunctionalChildComponent';
-import StatefulChildComponent from './components/StatefulChildComponent';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-
+      
     }
   }
+
   render() {
     return (
       <div className="App">
@@ -20,8 +19,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div>
-          <FunctionalChildComponent />
-          <StatefulChildComponent />
+          
         </div>
       </div>
     );
