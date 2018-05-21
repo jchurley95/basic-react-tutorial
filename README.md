@@ -519,6 +519,7 @@ this.state = {
 
 Create a new file in the components folder called PizzaTopping.js and make sure to pass props as a parameter, and display props.topping.
 If you are using VS Code as your editor, I would recommend trying out an extension called "React Code Snippets" which allows you to type rsc and then press tab to scaffold a functional component for you. It also allows you to type rcc then press tab and it will scaffold out a stateful component for you.
+Try rsc tab for creating your PizzaTopping component.
 
 ``` javascript
 import React from 'react';
@@ -623,7 +624,7 @@ You can also clone this repo https://github.homedepot.com/Pricing/react-common-f
 
 
 
-#Below this line is the README that comes with create-react-app
+# Below this line is the README that comes with create-react-app
 ____________________________________________________________________________________________________________
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
