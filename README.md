@@ -32,7 +32,7 @@ import StatefulChildComponent from './components/StatefulChildComponent';
 ```
 
 Notice that you do not have to specify the file type in the import statements (.js can be left off).
-Now lets actually render these components in the empty ```<div>``` tag underneath the ```<header>``` tag in App.js.
+Now lets actually render these components in the empty ``` javascript <div>``` tag underneath the ``` javascript <header>``` tag in App.js.
 
 
  ``` javascript
