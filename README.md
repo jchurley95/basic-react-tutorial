@@ -625,7 +625,6 @@ You can also clone this repo https://github.homedepot.com/Pricing/react-common-f
 
 
 # Below this line is the README that comes with create-react-app
-____________________________________________________________________________________________________________
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
