@@ -18,10 +18,10 @@ If you want to do further reading at any point I would recommend taking a look a
 Our goal is to create re-usable building blocks called child components.
 The structure that these building blocks live inside of is their parent component.
 Within the "src" folder you have been given a folder called "components" which contains FunctionalChildComponent.js and StatefulChildComponent.js. 
-In this app, the file called "App.js" will be these other two components' parent component.
+In this app, the file called "App.js" will be the main parent component.
 
 To see this in action, we first need to import our child components into App.js.
-The import statements in App.js should now look something like:
+The import statements in App.js should look something like:
 
 ``` javascript
 import React, { Component } from 'react';
@@ -184,7 +184,7 @@ Finally, lets show this value on the page as it changes.
   </header>
   <div>
     <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
-    <div>True or False: {this.state.trueOrFalse}</div>
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
     <FunctionalChildComponent />
     <StatefulChildComponent />
   </div>
@@ -196,8 +196,11 @@ Next let's talk about what we just did to make the data show on the page.
 
 ## Showing data in JSX
 
-Fun fact, you haven't technically written a single line of HTML at this point, and you aren't going to.
+Fun fact, you technically haven't been writing any HTML at this point, and you aren't going to.
 You've actually been using a language called JSX (JavaScript XML), which is much more powerful than HTML.
+If you look at the code, your elements all say "className" instead of "class", and you just wrote a javascript directly into the text between tags using the bracket {} syntax.
+
+A little more about JSX:
 
 - "JSX produces React 'elements'"
 - "React doesn’t require using JSX, but most people find it helpful as a visual aid when working with UI inside the JavaScript code. It also allows React to show more useful error and warning messages."
@@ -206,7 +209,82 @@ You've actually been using a language called JSX (JavaScript XML), which is much
 - "By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks."
 Further reading: https://reactjs.org/docs/introducing-jsx.html
 
+You used JSX to show the value of trueOrFalse in App.js state as text on the page.
+Now, use it to show the value of myString on the page as well.
 
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.myString}</div>
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+```
+
+You should see the value of your string underneath the value of trueOrFalse.
+Now let's get a little more complicated.
+Show the value of myString on the page if the value of trueOrFalse is true.
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse ? this.state.myString : null}</div>
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+```
+
+or
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    <div>{this.state.trueOrFalse && this.state.myString}</div>
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+```
+
+or
+
+``` javascript
+<div className="App">
+  <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <h1 className="App-title">Welcome to React</h1>
+  </header>
+  <div>
+    <button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>  
+    <div>True or False: {this.state.trueOrFalse.toString()}</div>
+    {this.state.trueOrFalse ? <div>{this.state.myString}</div> : null}
+    <FunctionalChildComponent />
+    <StatefulChildComponent />
+  </div>
+</div>
+```
+
+You can render entire elements conditionally with JSX. This is helpful in any number on situations, such as only rendering/enabling certain buttons on a page if the user has the right permissions to use them, or only rendering parts of a page if a user is logged in, or only allowing a user to click submit on a form if certain fields on the form have been filled in.
 
 ## Passing data from parent component to child components as "props"
 
