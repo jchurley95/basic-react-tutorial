@@ -32,7 +32,6 @@ import StatefulChildComponent from './components/StatefulChildComponent';
 Notice that you do not have to specify the file type in the import statements (.js can be left off).
 Now lets actually render these components in the empty <div> tag underneath the <header> tag in App.js.
 
-CODE:
 
  ```
 <div className="App">
@@ -58,7 +57,6 @@ You've been given an empty state object. Add a property to this object called "m
 Next, add a line directly under the "render() {" line that says "console.log(this.state.myString)".
 If done correctly, your browser console should show your string.
 
-CODE:
 
 ```
 this.state = {
@@ -76,7 +74,6 @@ React gives us a method called setState which lets us update our state object an
 Try it out:
 Add a property to the state object called "trueOrFalse" and make it's value false.
 
-CODE:
 
 ```
 this.state = {
@@ -87,7 +84,7 @@ this.state = {
 
 Next, create a function underneath your constructor called "toggleTrueOrFalse" that will use this.setState to make this.state.trueOrFalse equal to the opposite of whatever it currently equals.
 
-GOOD CODE:
+GOOD
 
 ```
 toggleTrueOrFalse = () => {
@@ -109,7 +106,7 @@ Notice how if you call your variable the same name as it is called in the state 
 There are multiple ways to handle binding functions to the class, this "arrow function" syntax (the "arrow" being the "=>") is how I prefer to do it for simplicity's sake.
 When googling React stuff you will often see an alternative way of handling this using the "bind" function in the constructor. You can do further research if you want to see why people prefer the various ways of handling this.
 
-BAD CODE: 
+BAD 
 
 ```
 toggleTrueOrFalse = () => {
@@ -121,7 +118,7 @@ This is a common anti-pattern. React wants you to use setState and trigger that 
 
 Then, add a button tag above your child components that has an onClick function which triggers your function when clicked.
 
-GOOD CODE: 
+GOOD 
 
 ```
 <div className="App">
@@ -156,7 +153,7 @@ or
 Calling the function without adding () at the end, or calling a function that calls the function with () at the end to avoid an infinite loop of re-renders.
 If you want to pass a value/parameter directly to the function, you need to use the second example above.
 
-BAD CODE: 
+BAD 
 
 ```
 <div className="App">
@@ -176,7 +173,6 @@ A big "gotcha" of the React framework is that this syntax will constantly trigge
 
 Finally, lets show this value on the page as it changes.
 
-CODE:
 
 ```
 <div className="App">
