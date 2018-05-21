@@ -1,6 +1,7 @@
 # Basic React Tutorial
 
 Learn how to access and manipulate data between parent and child components in a React app.
+
 To get started, clone this repo and run "npm install", and then run "npm start".
 Assuming that worked, it should have installed all the dependencies specified in that package.json and started the app on localhost:3000.
 It should have opened the app for your as well in your browser. You will notice that the app reloads everytime you save your code.
@@ -33,6 +34,7 @@ Now lets actually render these components in the empty <div> tag underneath the 
 
 CODE:
 
+ ```
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -43,6 +45,7 @@ CODE:
     <StatefulChildComponent />
   </div>
 </div>
+```
 
 If done correctly, you should see "Hello from FunctionalChildComponent" and "Hello from StatefulChildComponent" on the page.
 
@@ -57,9 +60,11 @@ If done correctly, your browser console should show your string.
 
 CODE:
 
+```
 this.state = {
   myString: "Hello from myString"
 }
+```
 
 You can create/call on data outside of your state object as well, but it is considered an anti-pattern. This is not just my opinion, you can actually end up seeing an error or warning in the console coming from the React team that calls it an anti-pattern. We'll see why in the next section.
 
@@ -73,26 +78,32 @@ Add a property to the state object called "trueOrFalse" and make it's value fals
 
 CODE:
 
+```
 this.state = {
   myString: "Hello from myString",
   trueOrFalse: false
 }
+```
 
 Next, create a function underneath your constructor called "toggleTrueOrFalse" that will use this.setState to make this.state.trueOrFalse equal to the opposite of whatever it currently equals.
 
 GOOD CODE:
 
+```
 toggleTrueOrFalse = () => {
     var updatedTrueOrFalse = !this.state.trueOrFalse;
     this.setState({trueOrFalse: updatedTrueOrFalse});
 }
+```
 
 or
 
+```
 toggleTrueOrFalse = () => {
     var trueOrFalse = !this.state.trueOrFalse;
     this.setState({trueOrFalse});
 }
+```
 
 Notice how if you call your variable the same name as it is called in the state object you can just say this.setState({trueOrFalse}). 
 There are multiple ways to handle binding functions to the class, this "arrow function" syntax (the "arrow" being the "=>") is how I prefer to do it for simplicity's sake.
@@ -100,9 +111,11 @@ When googling React stuff you will often see an alternative way of handling this
 
 BAD CODE: 
 
+```
 toggleTrueOrFalse = () => {
     this.state.trueOrFalse = !this.state.trueOrFalse;
 }
+```
 
 This is a common anti-pattern. React wants you to use setState and trigger that re-render. Feel free to do further research.
 
@@ -110,6 +123,7 @@ Then, add a button tag above your child components that has an onClick function 
 
 GOOD CODE: 
 
+```
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -121,9 +135,11 @@ GOOD CODE:
     <StatefulChildComponent />
   </div>
 </div>
+```
 
 or 
 
+```
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -135,12 +151,14 @@ or
     <StatefulChildComponent />
   </div>
 </div>
+```
 
 Calling the function without adding () at the end, or calling a function that calls the function with () at the end to avoid an infinite loop of re-renders.
 If you want to pass a value/parameter directly to the function, you need to use the second example above.
 
 BAD CODE: 
 
+```
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -152,6 +170,7 @@ BAD CODE:
     <StatefulChildComponent />
   </div>
 </div>
+```
 
 A big "gotcha" of the React framework is that this syntax will constantly trigger re-rendering of the component in an infinite loop and crash the app. 
 
@@ -159,6 +178,7 @@ Finally, lets show this value on the page as it changes.
 
 CODE:
 
+```
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -171,6 +191,7 @@ CODE:
     <StatefulChildComponent />
   </div>
 </div>
+```
 
 Now when you click the button you should see the value change on the page.
 Next let's talk about what we just did to make the data show on the page.
