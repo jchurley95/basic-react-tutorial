@@ -11,7 +11,7 @@ I personally use Visual Studio Code as your editor. It is quick to open and has 
 If you have VS Code set up, you can just run "code ." from your terminal with the directory open and get started writing some React.
 Your actual React code exists in the "src" folder and cannot go outside of this folder.
 
-If you want to do further reading at any point I would recommend taking a look at the official Facebook React Docs
+If you want to do further reading at any point I would recommend taking a look at the official React Docs online.
 
 ## Parent and Child Components
 
