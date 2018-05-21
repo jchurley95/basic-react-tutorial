@@ -23,17 +23,19 @@ In this app, the file called "App.js" will be these other two components' parent
 To see this in action, we first need to import our child components into App.js.
 The import statements in App.js should now look something like:
 
+``` javascript
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FunctionalChildComponent from './components/FunctionalChildComponent';
 import StatefulChildComponent from './components/StatefulChildComponent';
+```
 
 Notice that you do not have to specify the file type in the import statements (.js can be left off).
 Now lets actually render these components in the empty <div> tag underneath the <header> tag in App.js.
 
 
- ```
+ ``` javascript
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -58,7 +60,7 @@ Next, add a line directly under the "render() {" line that says "console.log(thi
 If done correctly, your browser console should show your string.
 
 
-```
+``` javascript
 this.state = {
   myString: "Hello from myString"
 }
@@ -75,7 +77,7 @@ Try it out:
 Add a property to the state object called "trueOrFalse" and make it's value false.
 
 
-```
+``` javascript
 this.state = {
   myString: "Hello from myString",
   trueOrFalse: false
@@ -86,7 +88,7 @@ Next, create a function underneath your constructor called "toggleTrueOrFalse" t
 
 GOOD
 
-```
+``` javascript
 toggleTrueOrFalse = () => {
     var updatedTrueOrFalse = !this.state.trueOrFalse;
     this.setState({trueOrFalse: updatedTrueOrFalse});
@@ -95,7 +97,7 @@ toggleTrueOrFalse = () => {
 
 or
 
-```
+``` javascript
 toggleTrueOrFalse = () => {
     var trueOrFalse = !this.state.trueOrFalse;
     this.setState({trueOrFalse});
@@ -108,7 +110,7 @@ When googling React stuff you will often see an alternative way of handling this
 
 BAD 
 
-```
+``` javascript
 toggleTrueOrFalse = () => {
     this.state.trueOrFalse = !this.state.trueOrFalse;
 }
@@ -120,7 +122,7 @@ Then, add a button tag above your child components that has an onClick function 
 
 GOOD 
 
-```
+``` javascript
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -136,7 +138,7 @@ GOOD
 
 or 
 
-```
+``` javascript
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -155,7 +157,7 @@ If you want to pass a value/parameter directly to the function, you need to use 
 
 BAD 
 
-```
+``` javascript
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -174,7 +176,7 @@ A big "gotcha" of the React framework is that this syntax will constantly trigge
 Finally, lets show this value on the page as it changes.
 
 
-```
+``` javascript
 <div className="App">
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
