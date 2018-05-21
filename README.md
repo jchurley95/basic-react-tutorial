@@ -10,6 +10,8 @@ I personally use Visual Studio Code as your editor. It is quick to open and has 
 If you have VS Code set up, you can just run "code ." from your terminal with the directory open and get started writing some React.
 Your actual React code exists in the "src" folder and cannot go outside of this folder.
 
+If you want to do further reading at any point I would recommend taking a look at the official Facebook React Docs, which you can find online and below my tutorial on this README file.
+
 ## Parent and Child Components
 
 Our goal is to create re-usable building blocks called child components.
@@ -27,7 +29,6 @@ import FunctionalChildComponent from './components/FunctionalChildComponent';
 import StatefulChildComponent from './components/StatefulChildComponent';
 
 Notice that you do not have to specify the file type in the import statements (.js can be left off).
-React components can be declared like HTML tags, but should be closed immediately like an <input /> tag.
 Now lets actually render these components in the empty <div> tag underneath the <header> tag in App.js.
 
 CODE:
@@ -176,8 +177,16 @@ Next let's talk about what we just did to make the data show on the page.
 
 ## Showing data in JSX
 
-Fun fact, you haven't technically written a single line of HTML at this point and you aren't going to.
-Instead, we are using a language called JSX (JavaScript XML).
+Fun fact, you haven't technically written a single line of HTML at this point, and you aren't going to.
+You've actually been using a language called JSX (JavaScript XML), which is much more powerful than HTML.
+
+
+- "JSX produces React 'elements'"
+- "React doesn’t require using JSX, but most people find it helpful as a visual aid when working with UI inside the JavaScript code. It also allows React to show more useful error and warning messages."
+- "You can put any valid JavaScript expression inside the curly braces in JSX. For example, 2 + 2, user.firstName, or formatName(user) are all valid JavaScript expressions."
+- "After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects."
+- "By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks."
+Further reading: https://reactjs.org/docs/introducing-jsx.html
 
 ## Passing data from parent component to child components as "props"
 
