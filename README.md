@@ -1,4 +1,5 @@
 # Basic React Tutorial
+(if it matters to you, this component pre-dates react hooks, and will need to be updated once they are released into the wild)
 
 Learn how to access and manipulate data between parent and child components in a React app.
 
@@ -104,7 +105,7 @@ toggleTrueOrFalse = () => {
 }
 ```
 
-Notice how if you call your variable the same name as it is called in the state object you can just say this.setState({trueOrFalse}). 
+Notice how if you call your variable the same name as it is called in the state object you can just say ```this.setState({trueOrFalse})```
 There are multiple ways to handle binding functions to the class, this "arrow function" syntax (the "arrow" being the "=>") is how I prefer to do it for simplicity's sake.
 When googling React stuff you will often see an alternative way of handling this using the "bind" function in the constructor. You can do further research if you want to see why people prefer the various ways of handling this.
 
@@ -169,9 +170,21 @@ or
 ```
 A big "gotcha" of the React framework is that this BAD syntax can constantly trigger a re-rendering of the component in an infinite loop and crash the app.
 
-The correct way to add an onClick to a JSX element is by defining the function without adding () at the end, or defining a function that calls your function with () at the end. In other words, the good syntax onClick={this.toggleTrueOrFalse} supplies the element with a definition of the function that it needs to call when clicked. However, the bad syntax onClick={this.toggleTrueOrFalse()} will actually call that function when the component renders. If that function includes a setState(), then you it will call that setState(), triggering a re-render of component, which will call that function again, which will call that setState() again, which will trigger a re-render again...not good stuff. But then what do we do if we need to be able to pass values to that function as parameters? 
+The correct way to add an onClick to a JSX element is by defining the function without adding () at the end, or defining a function that calls your function with () at the end. In other words, the good syntax 
+``` javascript 
+onClick={this.toggleTrueOrFalse}
+``` 
+supplies the element with a definition of the function that it needs to call when clicked. However, the bad syntax 
+``` javascript
+onClick={this.toggleTrueOrFalse()}
+``` 
+will actually call that function when the component renders. If that function includes a setState(), then you it will call that setState(), triggering a re-render of component, which will call that function again, which will call that setState() again, which will trigger a re-render again...not good stuff. But then what do we do if we need to be able to pass values to that function as parameters? 
 
-If you want to pass a value/parameter directly to the function, you need to use the second example above. Using the syntax onClick={() => {this.toggleTrueOrFalse(this.state.trueOrFalse)}} you are giving the element another function, that it will not call until clicked, and when clicked, will call the the function with any parameters you give it.
+If you want to pass a value/parameter directly to the function, you need to use the second example above. Using the syntax 
+``` javascript
+onClick={() => {this.toggleTrueOrFalse(this.state.trueOrFalse)}}
+``` 
+you are giving the element another function, that it will not call until clicked, and when clicked, will call the the function with any parameters you give it.
 
 Now lets show this value on the page as it changes.
 
@@ -285,8 +298,15 @@ or
 {this.state.trueOrFalse ? <FunctionalChildComponent /> : <StatefulChildComponent />}
 ```
 
-The way I prefer to write the first example is {this.state.trueOrFalse === true ? <FunctionalChildComponent /> : null}
-While the {this.state.trueOrFalse === true && <FunctionalChildComponent />} syntax using the && instead of the ? : ternary syntax is convenient, I one time for some reason I still cannot understand had the && syntax default to displaying a 0 on the page instead of null (just rendering nothing). I know that a lot of people prefer the && syntax, but beware the ninja 0.
+The way I prefer to write the first example is 
+``` javascript 
+{this.state.trueOrFalse === true ? <FunctionalChildComponent /> : null}
+```
+While the 
+``` javascript 
+{this.state.trueOrFalse === true && <FunctionalChildComponent />} 
+```
+syntax using the && instead of the ? : ternary syntax is convenient, I one time for some reason I still cannot understand had the && syntax default to displaying a 0 on the page instead of null (just rendering nothing). I know that a lot of people prefer the && syntax, but beware the ninja 0.
 
 ## Passing data from parent component to child components as "props"
 
@@ -394,7 +414,11 @@ Remember our toggleTrueOrFalse function? Its time to pass it down to our child c
 </div>
 ```
 
-Notice that I removed our ```<button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>```, it's moving to our child components now and it will call the same function as before, but this time it will refer to it in terms of props.
+Notice that I removed our 
+``` javascript
+<button onClick={this.toggleTrueOrFalse}>Toggle T/F</button>
+``` 
+beucase it's moving to our child components now and it will call the same function as before, but this time it will refer to it in terms of props.
 
 ``` javascript
 import React from 'react';
@@ -437,7 +461,9 @@ class StatefulChildComponent extends Component {
 export default StatefulChildComponent;
 ```
 
-Now our button tags live in the child components, and every time we click the button on the screen it will change the value in the parent component's state, trigger a setState re-render, and in the process, load the correct JSX/child component based on the value it now reads from the App.js state. The important thing to understand here is that yes, we triggered the function from the child component, but the function does not live there, and is actually called within the context of the parent component. In other words, the parent gave the child permission to use it's car, but the parent still owns that car. If the function is washCar(), and the child is the one that technically washed the car, it is still the parent's car that got washed, and the parent's car that is now clean. Meanwhile, the kid can now use their parent's clean car.
+Now our button tags live in the child components, and every time we click the button on the screen it will change the value in the parent component's state, trigger a setState re-render, and in the process, load the correct JSX/child component based on the value it now reads from the App.js state. The important thing to understand here is that yes, we triggered the function from the button that lives in the child component, but the function itself does not live there, as it still belongs to the parent component. 
+
+In other words, the parent gave the child permission to use the parent's car, but the parent still owns that car. If the function is washCar(), and the child is the one that technically washed the car, it is still the parent's car that got washed, and the parent's car that is now clean instead of dirty. In the process, the kid can now use their parent's clean car.
 
 ## Mapping through an array to return child components
 
@@ -548,9 +574,9 @@ export default App;
 # You're Done!
 Now you can create parent and child components, pass data and functions as props from the parent to the children, and dynamically render components based on state or props.
 
-More advanced tutorials would include integrating an ```express``` server as your API and using npm packages like ```axios``` or ```fetch``` to make API calls from react components, as well as using the React lifecycle methods such as ```componentWillMount()``` and ```componentDidMount()``` to control what data your component initially loads with using those API calls.
+More advanced tutorials would include integrating an ```express``` server as your API and using npm packages like ```axios``` or ```fetch``` to make API calls from react components, as well as using the React lifecycle methods such as ```componentDidMount()``` and ```componentDidUpdate()``` to control what data your component initially loads with using those API calls.
 
-You can also clone this repo https://github.homedepot.com/Pricing/react-common-framework-UI and have an app set up with 
+You can also clone this repo ```https://github.homedepot.com/Pricing/pricing-react-express-starter``` and have an app set up with 
 - express and react already bootstrapped for you
 - React Router set up
 - package.json scripts already set up to handle react and express running together
