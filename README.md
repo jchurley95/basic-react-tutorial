@@ -1,5 +1,5 @@
 # Basic React Tutorial
-(if it matters to you, this component pre-dates react hooks, and will need to be updated once they are released into the wild)
+(If it matters to you, this tutorial pre-dates react hooks, and will need to be updated once they are finally released into the wild)
 
 Learn how to access and manipulate data between parent and child components in a React app.
 
