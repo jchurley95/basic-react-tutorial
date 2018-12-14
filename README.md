@@ -68,7 +68,7 @@ this.state = {
 
 You can create/call on data outside of your state object as well, but it is considered an anti-pattern. This is not just my opinion, you can actually end up seeing an error or warning in the console coming from the React team that calls it an anti-pattern. We'll see why in the next section.
 
-## Using this.setState({}) to trigger a re-render of the page.
+## Using this.setState() to update state and trigger a re-render of the page.
 
 When we maintain our data in our state object, we can work with the React framework rather than against it.
 React gives us a method called setState which lets us update our state object and then triggers a re-render of the component AND it's children as a result.
@@ -116,9 +116,9 @@ toggleTrueOrFalse = () => {
 }
 ```
 
-This is a common anti-pattern. React wants you to use setState and trigger that re-render. Feel free to do further research.
+This is a common anti-pattern. React wants you to use setState and only setState when you want to update your state object. Doing so will trigger a re-rendering of the component with the updated state values. Feel free to do further research.
 
-Then, add a button tag above your child components that has an onClick function which triggers your function when clicked.
+Next, add a button tag above your child components and give that button an onClick function so that the button calls that function when clicked.
 
 #### GOOD 
 
@@ -152,9 +152,6 @@ or
 </div>
 ```
 
-Calling the function without adding () at the end, or calling a function that calls the function with () at the end to avoid an infinite loop of re-renders.
-If you want to pass a value/parameter directly to the function, you need to use the second example above.
-
 #### BAD 
 
 ``` javascript
@@ -170,10 +167,13 @@ If you want to pass a value/parameter directly to the function, you need to use 
   </div>
 </div>
 ```
+A big "gotcha" of the React framework is that this BAD syntax can constantly trigger a re-rendering of the component in an infinite loop and crash the app.
 
-A big "gotcha" of the React framework is that this syntax will constantly trigger re-rendering of the component in an infinite loop and crash the app. 
+The correct way to add an onClick to a JSX element is by defining the function without adding () at the end, or defining a function that calls your function with () at the end. In other words, the good syntax onClick={this.toggleTrueOrFalse} supplies the element with a definition of the function that it needs to call when clicked. However, the bad syntax onClick={this.toggleTrueOrFalse()} will actually call that function when the component renders. If that function includes a setState(), then you it will call that setState(), triggering a re-render of component, which will call that function again, which will call that setState() again, which will trigger a re-render again...not good stuff. But then what do we do if we need to be able to pass values to that function as parameters? 
 
-Finally, lets show this value on the page as it changes.
+If you want to pass a value/parameter directly to the function, you need to use the second example above. Using the syntax onClick={() => {this.toggleTrueOrFalse(this.state.trueOrFalse)}} you are giving the element another function, that it will not call until clicked, and when clicked, will call the the function with any parameters you give it.
+
+Now lets show this value on the page as it changes.
 
 
 ``` javascript
@@ -192,15 +192,16 @@ Finally, lets show this value on the page as it changes.
 ```
 
 Now when you click the button you should see the value change on the page.
+Notice how we don't break the code by calling that .toString() because that function does not trigger a re-rendering of the page.
 Next let's talk about what we just did to make the data show on the page.
 
 ## Showing data in JSX
 
 Fun fact, you technically haven't been writing any HTML at this point, and you aren't going to.
-You've actually been using a language called JSX (JavaScript XML), which is much more powerful than HTML.
+You've actually been using a language called JSX (JavaScript XML), which is much more powerful than basic HTML and pairs very well with the React library.
 If you look at the code, your elements all say "className" instead of "class", and you just wrote a javascript directly into the text between tags using the bracket {} syntax.
 
-One key thing to remember is that each JSX object can only have one element, so basically if you only created two divs side by side not enclosed in another div then it will break.
+One key thing to remember is that each JSX object can only have one element, so basically if you only created two divs side by side and did not enclose them in another div, then it will break and tell you they must be wrapped in a parent component.
 
 A little more about JSX:
 
@@ -284,6 +285,9 @@ or
 {this.state.trueOrFalse ? <FunctionalChildComponent /> : <StatefulChildComponent />}
 ```
 
+The way I prefer to write the first example is {this.state.trueOrFalse === true ? <FunctionalChildComponent /> : null}
+While the {this.state.trueOrFalse === true && <FunctionalChildComponent />} syntax using the && instead of the ? : ternary syntax is convenient, I one time for some reason I still cannot understand had the && syntax default to displaying a 0 on the page instead of null (just rendering nothing). I know that a lot of people prefer the && syntax, but beware the ninja 0.
+
 ## Passing data from parent component to child components as "props"
 
 Our data in this app currently lives in our App.js state, but we can access it from our child components by passing it as a reserved term called "props" through the element tags. Whatever you decide to call these props is up to you (for example, stringFromParent could be called something else like angularWishesItWasReact)
@@ -309,9 +313,9 @@ Our data in this app currently lives in our App.js state, but we can access it f
 ```
 
 Now we can access this in our child components.
-Make sure with the functional child component to pass props as a parameter.
+Make sure that you pass props as a parameter to this functional child component.
 
-Note: we have to refer to props as this.props in the stateful child and just props in the functional child. 
+Note: we have to refer to props as this.props in the stateful child, because the component is a javascript class, but we just call them props in the functional child component.
 
 
 ``` javascript
@@ -433,7 +437,7 @@ class StatefulChildComponent extends Component {
 export default StatefulChildComponent;
 ```
 
-Now our button tags live in the child components, and every time we click the button on the screen it will change the value in the parent component's state, trigger a setState re-render, and in the process, load the correct JSX/child component based on the value it now reads from the App.js state.
+Now our button tags live in the child components, and every time we click the button on the screen it will change the value in the parent component's state, trigger a setState re-render, and in the process, load the correct JSX/child component based on the value it now reads from the App.js state. The important thing to understand here is that yes, we triggered the function from the child component, but the function does not live there, and is actually called within the context of the parent component. In other words, the parent gave the child permission to use it's car, but the parent still owns that car. If the function is washCar(), and the child is the one that technically washed the car, it is still the parent's car that got washed, and the parent's car that is now clean. Meanwhile, the kid can now use their parent's clean car.
 
 ## Mapping through an array to return child components
 
