@@ -184,7 +184,15 @@ If you want to pass a value/parameter directly to the function, you need to use 
 ``` javascript
 onClick={() => {this.toggleTrueOrFalse(this.state.trueOrFalse)}}
 ``` 
-you are giving the element another function, that it will not call until clicked, and when clicked, will call the the function with any parameters you give it.
+you are giving the element another function 
+``` javascript
+() => {}
+```
+that it will not call until clicked, and when clicked, will call the the actual function 
+``` javascript
+this.toggleTrueOrFalse(this.state.trueOrFalse)
+```
+with any parameters you give it.
 
 Now lets show this value on the page as it changes.
 
